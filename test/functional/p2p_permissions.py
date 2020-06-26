@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2019 The Bitcoin Core developers
+# Copyright (c) 2015-2020 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test p2p permission message.
@@ -41,6 +41,12 @@ class P2PPermissionsTests(BitcoinTestFramework):
             ["-whitelist=127.0.0.1"],
             ["relay", "noban", "mempool"],
             True)
+
+        self.checkpermission(
+            # no permission (even with forcerelay)
+            ["-whitelist=@127.0.0.1", "-whitelistforcerelay=1"],
+            [],
+            False)
 
         self.checkpermission(
             # relay permission removed (no specific permissions)
